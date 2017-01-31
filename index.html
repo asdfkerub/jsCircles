@@ -9,7 +9,8 @@
 	<script>
 	document.getElementById("svg").style.width="100%";
 	document.getElementById("svg").style.height="100%";
-	document.getElementById("svg").style.background="black";
+	document.body.style.background="black";
+	document.body.style.margin="0";
 	function Circle(cx, cy, html_id)
 	{
 		var html_id = html_id;
@@ -31,7 +32,7 @@
 			var circle = makeSVG('circle',
 				{ 	cx: this.info.cx,
 				  	cy: this.info.cy,
-				  	r:  10,
+				  	r:  radius / 8,
 				  	id: html_id,
 				  	style: "fill: red"
 				});
@@ -47,7 +48,7 @@
 			{
 				this.info.velocity.x = this.info.velocity.x * -1;
 			}
-			if( this.info.cy > document.body.clientHeight - 10 || this.info.cy < 0)
+			if( this.info.cy > document.body.clientHeight - 15 || this.info.cy < 0)
 			{
 				this.info.velocity.y = this.info.velocity.y * -1;
 			}
@@ -94,6 +95,37 @@
 		//create one circle when the game starts
 		this.createNewCircle(document.body.clientWidth/2, document.body.clientHeight/2);
 	}
+
+	//Circle Size
+	function cRadius(down,up){
+		var size = up - down;
+		console.log(up);
+		console.log(down);
+		console.log(size);
+	}
+	function getTime(){
+		var date = new Date();
+		return date.getTime();
+	}
+	var mousedown_time;
+	var time_pressed;
+	var radius;
+	document.onmousedown = function(e){
+		mousedown_time = getTime();
+		console.log(mousedown_time);
+	}
+	document.onmouseup = function(e){
+		time_pressed = getTime();
+		radius = time_pressed - mousedown_time ;
+		console.log('You held your mouse down for', time_pressed, 'miliseconds.');
+		// cRadius(mousedown_time,time_pressed);
+		// console.log(time_pressed);
+	}
+
+	// document.onmouseup = function(e){
+	// 	console.log(mousedown_time - time_pressed);
+	// }
+
 
 	var playground = new PlayGround();
 	setInterval(playground.loop, 15);
